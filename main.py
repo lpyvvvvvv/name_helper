@@ -77,7 +77,36 @@ g_full_dict = {
 # 22划：蔼
 # 24划：灵、雳
 
-
+# 1、有“子”、“壬”、“癸”之字，其字有：子、享、孚、孟、承、壬、癸。
+# 2、有“申”、“爱”、“袁”之字，其字如：申、绅、袁、媛。
+# 3、有“马”、“午”之字，积极努力奔赴前程。其字如：马、驻、骋、骏、腾、骞、腾、骜。
+# 4、有抬头的，如“亠”展露其威。其字如：“有”、“存”、“育”、“彦”、“真”、“青”、“升”
+# -
+# 1、不能太小
+# 像臣，小，士，人，这些字。
+# -
+# 2、怕小狗狗
+# 城，诚，成，茂，盛，这些字。
+# -
+# 3、 不下地。
+# 比如留，地，惠，迪，思，都不使用哈。
+# -
+# 4、不喜小兔子。
+# 这个逸字用的人很多，里边藏了一个小兔子
+# 再如，卿，柳，勉，免
+# -
+# 23:00-00:59：子、文、玄、明、鸣、溪
+# 01:00-02:59：羽、岚、以、城、亦、峥
+# 03:00-04:59：筱、京、元、菲、可、琳
+# 05:00-06:59：其、林、胤、杭、芷、兰
+# 07:00-08:59：幼、容、稚、安、培、硕
+# 09:00-10:59：宁、夏、知、乐、南、晴
+# 11:00-12:59：令、臻、律、年、尔、宁
+# 13:00-14:59：予、疆、猷、勋、圣、屿
+# 15:00-16:59：瑞、星、徽、青、西、川
+# 17:00-18:59：心、柔、紫、夕、载、书
+# 19:00-20:59：豫、辰、远、峤、宛、玥
+# 21:00-22:59：澄、雪、沐、风、孝、泽
 
 
 #木生火，火生土，土生金，金生水，水生木
@@ -91,12 +120,36 @@ g_assign_num = [[8,8],[8,10],[8,16],[8,17],[9,2],[9,15],[9,16],[10,6],[10,7],[10
 g_assign_wuxing = []
 # g_assign_wuxing = ["水","木"]
 # g_assign_wuxing = ["金","水"]
+# g_assign_wuxing = ["土","金"]
 
 #排除文字
 g_exclude_word = []
 
 #指定文字
-g_assign_word = ["南"]
+g_assign_word = [""]
+# g_assign_word = ["昀"]
+
+#固定文字，如 x泽   ["","泽"]，优先级比指定文字高
+g_fix_word = ["霁", ""]
+
+#姓
+g_first_name = "李"
+
+
+
+#李成渊,李言蹊， 李聿泽
+# 李＋独体字＋左右结构
+
+#李诗妧
+# 李＋左右结构＋左右结构
+
+
+
+
+
+
+
+
 
 # [(8, 10, '金土金', '大吉'), (8, 16, '金土火', '大吉'), (8, 17, '金土土', '大吉'), (9, 2, '金土木', '中吉'), (9, 15, '金土火', '大吉'), (9, 16, '金土土', '大吉'), (10, 7, '金金金', '中吉'), (10, 15, '金金土', '大吉'), (11, 6, '金金金', '中吉'), 
 # (11, 7, '金金金', '中吉'), (11, 14, '金金土', '大吉'), (18, 6, '金土火', '大吉'), (18, 7, '金土土', '大吉'), (20, 5, '金金土', '大吉'), (20, 10, '金金水', '中吉')]
@@ -159,31 +212,49 @@ def main():
     readFile()
     
 
+    global g_first_name
     result = ""
     name_list = []
 
     has_assign_word = False
     if len(g_assign_word) > 0:
          has_assign_word = True
+
+    has_fix_word = False
+    if len(g_fix_word) > 0:
+        for x in g_fix_word:
+            y = x.strip()
+            if y:
+                has_fix_word = True
+                break
+
     for i in range(2):
-            
-        j = 1
+        
+        if i > 0 and  (has_fix_word or  has_assign_word):
+            break
         for num in g_assign_num:
             first = num[0]
             second = num[1]
             
-            if has_assign_word:
-                if i == 0:
-                    fist_list = g_assign_word
-                    second_list = g_word_with_num.get(second, [])
-                else:
-                    fist_list = g_word_with_num.get(first, [])
-                    second_list = g_assign_word
+            fist_list = g_word_with_num.get(first, [])
+            second_list = g_word_with_num.get(second, [])
+
+            if has_fix_word:
+                f = g_fix_word[0]
+                s = g_fix_word[1]
+                if f:
+                    fist_list = [f]
+                if s:
+                    second_list = [s]
             else:
-                if i > 0:
-                     break
-                fist_list = g_word_with_num.get(first, [])
-                second_list = g_word_with_num.get(second, [])
+                if has_assign_word:
+                    if i == 0:
+                        fist_list = g_assign_word
+                        second_list = g_word_with_num.get(second, [])
+                    else:
+                        fist_list = g_word_with_num.get(first, [])
+                        second_list = g_assign_word
+                
 
             # if len(g_assign_word) > 0:
             #     x = random.randint(0, 1)
@@ -242,7 +313,7 @@ def main():
                     
                     
 
-                    name = "李%s%s, %s %s, %s %s"%(w1, w2, num1, num2, wu1, wu2)
+                    name = "%s%s%s, %s %s, %s %s"%(g_first_name, w1, w2, num1, num2, wu1, wu2)
                     name_list.append(name)
                     result += name
                     result += "\n"
@@ -260,7 +331,8 @@ def main():
     tt = int(time.time())
     fname = "result/name_list.txt"
     f = open(fname, 'a', encoding='utf8')
-
+    f.write("==============================================\n")
+    f.flush()
 
     while True:
          try:
@@ -268,16 +340,18 @@ def main():
             s = input()
 
             if s == "q":
-                 break;
+                 break
             
             f.write("--------------------------\n")
             f.flush()
-            for i in range(10):
+            isQuit = False
+            for i in range(7):
 
                 lll = len(name_list)
                 if lll <= 0:
                     print("no result any more")
-                    break;
+                    isQuit = True
+                    break
 
                 index = random.randint(0, lll - 1)
 
@@ -291,6 +365,8 @@ def main():
                 f.flush()
 
                 del name_list[index]
+            if isQuit:
+                break
 
 
             

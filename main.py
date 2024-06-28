@@ -130,7 +130,7 @@ g_assign_word = [""]
 # g_assign_word = ["昀"]
 
 #固定文字，如 x泽   ["","泽"]，优先级比指定文字高
-g_fix_word = ["霁", ""]
+g_fix_word = ["令", ""]
 
 #姓
 g_first_name = "李"

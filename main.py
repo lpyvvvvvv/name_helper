@@ -113,12 +113,12 @@ g_full_dict = {
 #木克土，土克水，水克火、火克金、金克木
 
 #指定笔画
-g_assign_num = [[8,8],[8,10],[8,16],[8,17],[9,2],[9,15],[9,16],[10,6],[10,7],[10,15],[11,6],[11,7],[11,14],[18,6],[18,7],[20,5],[22,10],
-                ]
+g_assign_num = [[8,8],[8,10],[8,16],[8,17],[9,2],[9,15],[9,16],[10,6],[10,7],[10,15],[11,6],[11,7],[11,14],[18,6],[18,7],[20,5],[22,10],]
 
 #指定五行
-g_assign_wuxing = []
-# g_assign_wuxing = ["水","木"]
+# g_assign_wuxing = []
+# g_assign_wuxing = ["木","水"]
+g_assign_wuxing = ["水","木"]
 # g_assign_wuxing = ["金","水"]
 # g_assign_wuxing = ["土","金"]
 
@@ -126,11 +126,11 @@ g_assign_wuxing = []
 g_exclude_word = []
 
 #指定文字
-g_assign_word = [""]
+g_assign_word = []
 # g_assign_word = ["昀"]
 
 #固定文字，如 x泽   ["","泽"]，优先级比指定文字高
-g_fix_word = ["令", ""]
+g_fix_word = ["沐", ""]
 
 #姓
 g_first_name = "李"
@@ -230,7 +230,8 @@ def main():
 
     for i in range(2):
         
-        if i > 0 and  (has_fix_word or  has_assign_word):
+        # if i > 0 and  (has_fix_word or  has_assign_word):
+        if i > 0:
             break
         for num in g_assign_num:
             first = num[0]
